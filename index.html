@@ -118,6 +118,7 @@
     }
     #your-displayed-rebuttal {
     	color: #b5d2d6;
+    	white-space: pre;
     }
     textarea {
     	margin: 1rem auto .5rem;
@@ -263,6 +264,14 @@ function onSubmitResponse () {
 	capitalismTextElem.innerHTML = `"${nextResponse}"`
 	return false
 }
+
+yourRebuttalElem
+    .addEventListener("keydown", (event) => {
+    if (event.keyCode === 13 && !event.shiftKey) {
+    	event.preventDefault()
+    	onSubmitResponse()
+    }
+});
 
 </script>
 </html>
