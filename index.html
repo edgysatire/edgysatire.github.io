@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debate a Capitalist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Debate a capitalist" />
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-size: 22px;
+    }
+    #container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 12px;
+      position: relative;
+    }
+    h1,h2,h3,h4,h5,h6,p {
+      color: white;
+    }
+    h1 {
+    	color: rgb(162,162,162);
+      margin: 15px 0;
+      font-size: 45px;
+    }
+    .h1-title:hover {
+      color: rgb(167, 65, 65);
+    }
+    @media screen and (max-width: 600px) {
+      h1 {
+        margin: 29px 0;
+        font-size: 46px;
+      }
+    }
+    h2 {
+      font-size: 18px;
+    }
+    h3 {
+      font-size: 22px;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+    }
+    a.colored {
+      color: #79deff;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    li {
+      list-style-type: none;
+      margin-bottom: 10px;
+    }
+    .heading {
+      color: #c1feff;
+      margin: 20px 0;
+    }
+    .subtitle {
+      color: rgb(202,202,202);
+    }
+    .colored-link {
+      color: rgb(255,100,100);
+    }
+    .fb-link {
+      color: rgb(133, 199, 255);
+    }
+    .light-grey {
+      color: rgb(230,230,230);
+    }
+    .icon {
+      width: 38px;
+      fill: white;
+      transition: all .5s ease-out;
+    }
+    .icon:hover {
+      fill: red;
+      transform: scale(1.25);
+    }
+    .youtube > svg:hover {
+      fill: #bb0000;
+    }
+    .facebook > svg:hover {
+      fill: #7e97cd;
+    }
+    .twitter > svg:hover {
+      fill: #00aced;
+    }
+    .instagram > svg:hover {
+      fill: #ded1c1;
+    }
+    .linkedin > svg:hover {
+      fill: #33beff;
+    }
+    .soundcloud > svg:hover {
+      fill: #f50;
+    }
+    .github > svg:hover {
+      fill: white;
+    }
+    .text-center {
+    	text-align: center;
+    }
+    .capitalist-text {
+    	font-size: 40px;
+    	margin-top: 1rem;
+    	margin-left: auto;
+    	margin-right: auto;
+    	position: absolute;
+    	width: 85%;
+    	text-shadow: 2px 2px #000000;
+    	left: 0;
+    	right: 0;
+    	background-color: rgba(0,0,0,.17);
+    }
+    .capitalist-img {
+    	margin-bottom: 1rem;
+    }
+    #your-displayed-rebuttal {
+    	color: #b5d2d6;
+    }
+    textarea {
+    	margin-top: 1rem;
+    	margin-left: auto;
+    	margin-right: auto;
+    	padding: 10px 15px;
+    	display: block;
+    	width: 80%;
+    	background-color: rgb(50,50,50);
+    	color: white;
+    	height: 80px;
+    	font-size: 1.5rem;
+    }
+/*    input.your-rebuttal {
+    	margin-left: auto;
+    	margin-right: auto;
+    	padding: 10px 15px;
+    	display: block;
+    	width: 80%;
+    	background-color: rgb(50,50,50);
+    	color: white;
+    	height: 100px;
+    	font-size: 1.5rem;
+    }*/
+    .btn-respond {
+    	font-size: 100px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <h1 class="h1-title text-center">🇺🇸 Debate a Capitalist 🇺🇸</h1>
+  <div id="capitalism-text" class="capitalist-text text-center">"Capitalism is the single greatest invention in humanity and is responsible for lifting billions out of poverty."</div>
+  <div class="text-center">
+  	<img class="capitalist-img" src="/Eric-Trump.jpg" />
+  	<div id="your-displayed-rebuttal"></div>
+  	<form onsubmit="return onSubmitResponse()">
+  		<textarea id="your-rebuttal" name="your-rebuttal" placeholder="Type your rebuttal here..." autoFocus></textarea>
+  		<!-- <input class="your-rebuttal" type="text" placeholder="Type your rebuttal here..." /> -->
+  		<input type="submit" value="Respond" class="btn-respond" />
+  	</form>
+  </div>
+</body>
+
+<script>
+
+const initialResponse = "Capitalism is the single greatest invention in humanity and is responsible for lifting billions out of poverty."
+
+const responseArr = [
+	"Capitalism is the single greatest invention in humanity and is responsible for lifting billions out of poverty.",
+	"If we eliminated welfare and minimum wage, there would be less poverty",
+	"The economy is doing fantastic. Unemployment is at historic lows and GDP growth grew 2.3% last quarter. I don't understand why people are complaining.",
+	"I built this business with my bare hands. People need to learn the value of hard work.",
+	"Teachers get paid enough, their salary is dictated by the free markets.",
+	"Capital should be taxed less than labor because I have inherently more right to my income than you do",
+	"Poor people are just lazy. They need to work harder, pick themselves up by the bootstraps.",
+	"Socialism doesn't work. Just look at Venezuela, Cuba, and the Soviet Union.",
+	"You're not a communist are you?",
+	"Canadians are coming here to America for our superior healthcare",
+	"Scandinavian countries are small with homogenous populations, their nanny state just wouldn't work here",
+	"Taxation is theft except to enforce property rights",
+	"Inequality doesn't matter",
+	"Poor people need to stop making excuses. It's their fault they're poor.",
+	"The Civil War was about state's rights, not slavery",
+	"If you don't like it here why don't you just leave?",
+	"We needed to bailout the banks and investors during the financial crisis because the systemic risk was too high",
+]
+
+let shuffledResponseIndexes
+	, currentResponseIndex
+
+const numResponses = responseArr.length
+const unsortedResponseIndexes = new Array(numResponses)
+for (let i = 0; i < numResponses; i++) {
+	unsortedResponseIndexes[i] = i
+}
+
+resetShuffle(true)
+
+
+const yourRebuttalElem = document.getElementById('your-rebuttal')
+	, yourDisplayedRebuttalElem = document.getElementById('your-displayed-rebuttal')
+	, capitalismTextElem = document.getElementById('capitalism-text')
+
+/*****************************************/
+
+function resetShuffle (initial = false) {
+	if (initial) {
+		shuffledResponseIndexes = [0].concat(unsortedResponseIndexes.slice(1).sort(() => .5 - Math.random()))
+	} else {
+		shuffledResponseIndexes = unsortedResponseIndexes.slice(0).sort(() => .5 - Math.random())
+	}
+
+	currentResponseIndex = 0
+}
+
+
+function onSubmitResponse () {
+	const yourRebuttal = yourRebuttalElem.value
+	if (yourRebuttal === '') {
+		yourDisplayedRebuttalElem.innerHTML = ''
+	} else {
+		yourDisplayedRebuttalElem.innerHTML = `"${yourRebuttal}"`
+	}
+	yourRebuttalElem.value = ''
+	yourRebuttalElem.focus()
+
+	currentResponseIndex++
+
+	if (currentResponseIndex >= numResponses) {
+		resetShuffle()
+	}
+	const nextResponse = responseArr[shuffledResponseIndexes[currentResponseIndex]]
+	capitalismTextElem.innerHTML = `"${nextResponse}"`
+	return false
+}
+
+</script>
+</html>
