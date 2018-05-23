@@ -32,6 +32,7 @@
 		  right: 0;
 		  margin-right: 5px;
 		  font-size: 18px;
+		  white-space: nowrap;
     }
     .footer, .footer a {
     	color: gray;
@@ -137,26 +138,29 @@
     	background-color: rgba(0,0,0,.17);
     }
     .capitalist-img {
-    	margin-bottom: 1rem;
     	max-width: 100%;
     }
     #your-displayed-rebuttal {
     	color: #b5d2d6;
     	/* #c2c8da */
     	white-space: pre;
+    	margin: 1rem 0;
     }
-    textarea {
-    	margin: 1rem auto .5rem;
+    #your-displayed-rebuttal:empty {
+    	margin: 5px 0 0;
+    }
+    #your-rebuttal {
+    	margin: 0 auto 15px;
     	padding: 10px 15px;
     	display: block;
     	width: 80%;
     	background-color: rgb(50,50,50);
     	color: white;
     	height: 80px;
-    	font-size: 1.5rem;
+    	font-size: 24px;
     }
 
-    textarea:focus {
+    #your-rebuttal:focus {
     	outline: none;
     }
 
@@ -187,11 +191,25 @@
     }
 
     @media screen and (max-width: 600px) {
+    	#container-inner {
+    		padding-bottom: 100px;
+    	}
       h1 {
         margin: 29px 0;
         font-size: 35px;
 
       }
+
+      #your-rebuttal {
+				width: 100%;
+				padding: 0;
+				margin: 0 0 10px;
+	    	font-size: 1rem;
+      }
+    
+	    #your-displayed-rebuttal {
+	    	margin: .25rem 0;
+	    }
 
 	    .capitalist-text {
 	    	font-size: 30px;
@@ -264,7 +282,7 @@ const responseArr = [
 	"The Civil War was about state's rights, not slavery",
 	"If you don't like it here why don't you just leave?",
 	"We needed to bailout the banks and investors during the financial crisis because the systemic risk was too high",
-	"Like Margaret Thatcher said, there is no alternative (TINA). The debate is over. End of discussion.",
+	"Like Margaret Thatcher said, there is no alternative. The debate is over. End of discussion.",
 	"Wealthy people deserve a tax break, they create jobs.",
 ]
 
